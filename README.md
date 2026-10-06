@@ -12,25 +12,39 @@ In the EdTech industry, the cost of acquiring a new customer is significantly hi
 * **Matplotlib**: For visualizing feature importance.
 
 ## Methodology
-1. **Data Ingestion**: The script loads user engagement and subscription data.
-2. **Data Preprocessing**: Categorical features like Subscription Tier are converted into numerical formats using Label Encoding.
-3. **Model Training**: A Random Forest Classifier is trained on historical data, learning the complex non-linear relationships between engagement metrics and the likelihood of churning.
+1. **Data Ingestion**: The script loads user engagement and subscription data from the `data/` directory.
+2. **Data Preprocessing**: Missing values are dropped and categorical features like Subscription Type are converted into numerical formats using Label Encoding.
+3. **Model Training**: A Random Forest Classifier is trained on historical data, learning the relationships between engagement metrics and the likelihood of churning.
 4. **Evaluation**: The model is evaluated on a hold-out test set to determine its accuracy.
-5. **Feature Importance**: The script extracts and visualizes which features (e.g., Days Since Last Login vs. Video Completion Rate) are the strongest predictors of churn, saving the plot as `feature_importance.png`.
+5. **Feature Importance**: The strongest predictors of churn are extracted and visualized.
 
-## Business Impact
-A robust predictive model for churn allows for targeted retention strategies:
-* Maximized Customer Lifetime Value (CLTV) by reducing turnover.
-* Optimized marketing budgets by directing retention discounts only to high-risk users rather than a blanket approach.
-* Actionable product insights derived from feature importance (e.g., discovering that low video completion is the primary driver of churn).
+## Project Structure
+* `data/`: Contains the raw dataset.
+* `src/`: Modularized python scripts (`preprocess.py`, `model.py`).
+* `main.py`: The entry point script to run the predictive pipeline.
+* `requirements.txt`: Python package dependencies.
+
+## Results
+After training the Random Forest Classifier, the model achieved an accuracy of **54.24%**. 
+
+The analysis determined the following feature importances in predicting churn:
+* **Usage Frequency:** 0.6232
+* **Last Interaction:** 0.3592
+* **Subscription Type:** 0.0176
+
+![Feature Importance](feature_importance.png)
 
 ## Setup Instructions
 **Prerequisites:**
-You must provide the dataset `edtech_users.csv` in the root of this directory. The CSV must contain the following columns: `DaysSinceLastLogin`, `VideoCompletionRate`, `SubscriptionTier`, and `ChurnLabel`.
+Place the dataset inside the `data/` directory and rename it to `edtech_users.csv`.
+
+Install dependencies:
+```bash
+pip install -r requirements.txt
+```
 
 **Execution:**
-Run the analysis script using the following command:
+Run the predictive pipeline using the following command:
 ```bash
 python main.py
 ```
-This will print the model's accuracy, output the importance of each feature, and generate a visualization of these importances.
